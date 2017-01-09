@@ -88,17 +88,14 @@ start() {
     
     "$XEPHYR" :$D -name xephyr_$D -ac -br -noreset -screen "$SIZE" $XEPHYR_OPTIONS >/dev/null 2>&1 &
     sleep 1
-    DISPLAY=:$D.0 "$AWESOME" -c "$RC_FILE" $AWESOME_OPTIONS &
-    sleep 1
-    
-    # print some useful info
+    echo "Xephys started on display $D, PID $(xephyr_pid)"
+    echo "Starting Awesome WM"
     if [[ "$RC_FILE" =~ .test$ ]]; then
-    echo "Using a test file ($RC_FILE)"
+        echo "Using a test file ($RC_FILE)"
     else
-    echo "Caution: NOT using a test file ($RC_FILE)"
+        echo "Caution: NOT using a test file ($RC_FILE)"
     fi
-
-    echo "Display: $D, Awesome PID: $(awesome_pid), Xephyr PID: $(xephyr_pid)"
+    DISPLAY=:$D.0 "$AWESOME" -c "$RC_FILE" $AWESOME_OPTIONS
 }
 #}}}
 #{{{ Stop function
